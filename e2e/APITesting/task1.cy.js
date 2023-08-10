@@ -13,14 +13,20 @@ describe('Automating Form Submission', () => {
     cy.get('#firstName').type('Cowlar');
     cy.get('#lastName').type('Developer');
     cy.get('#userEmail').type('qaengineer@cowlar.com');
-    cy.get('#label').check();
+    cy.get('.custom-control').first().click(); // Select Male
     cy.get('#userNumber').type('0123456789');
-    cy.get('#dateOfBirthInput').type('2000-01-01');
-    cy.get('.subjects-auto-complete__value-container').type('Computer Science').type('{enter}');
-    cy.get('#hobbies-checkbox').check();
+    // Date of Birth is left as default
+    cy.get('#subjectsInput').type('Computer Science').type('{enter}');
+    cy.get('#hobbiesWrapper').contains('Music').click();
     cy.get('#currentAddress').type('Address 1');
-    cy.get('#state').type('NCR').type('{enter}');
-    cy.get('#city').type('Delhi').type('{enter}');
+    cy.get('#state').click(); // Click the dropdown to open it
+    cy.get('.react-select_3_input').type('NCR'); // Type the value you want to search for
+
+    cy.contains('NCR').click(); // Click the option from the dropdown to select it
+    cy.get('#city').click(); // Click the dropdown to open it
+    cy.get('.react-select_4_input').type('Delhi'); // Type the value you want to search for
+
+    cy.contains('Delhi').click(); // Click the option from the dropdown to select it
     
     // Step 6: Click on Submit button
     cy.contains('Submit').click();
@@ -41,4 +47,4 @@ describe('Automating Form Submission', () => {
     // Step 8: Close the Modal
     cy.get('#closeLargeModal').click();
     });
-  })
+  });

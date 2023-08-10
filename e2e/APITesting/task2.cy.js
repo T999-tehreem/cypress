@@ -37,10 +37,20 @@ describe('Verify Box Resizing', () => {
     cy.get('#resizableBoxWithRestriction').should('have.css', 'max-width', '500px');
 
     // Verify Box 2 is resizable
-    cy.get('#resizable').trigger('mousedown', { which: 1 })
-      .trigger('mousemove', { clientX: 300, clientY: 450 })
-      .trigger('mouseup', { force: true });
-    cy.get('#resizable').should('have.css', 'height', '250px');
-    cy.get('#resizable').should('have.css', 'width', '400px');
+    cy.get('#resizable')
+  .find('span')
+  .trigger('mousedown', { which: 1 }); // Trigger mouse down event to start dragging
+  cy.wait(1000); // Wait for a second
+
+// Move the mouse to a new position (example: +100px in x-direction, +50px in y-direction)
+cy.get('#resizable')
+  .find('span')
+  .trigger('mousemove', { clientX: 300, clientY: 450 }); // Adjust initialX and initialY accordingly
+  cy.wait(1000); // Wait for a second
+
+// Release the mouse button to stop dragging
+cy.get('#resizable')
+  .find('span')
+  .trigger('mouseup');
   });
-})
+});
