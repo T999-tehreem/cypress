@@ -16,5 +16,19 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+beforeEach(function () {
+  Cypress.on("uncaught:exception", () => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false;
+  });
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.window().then((win) => {
+    win.sessionStorage.clear();
+  });
+  cy.visit(Cypress.env("Url"));
+});
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
